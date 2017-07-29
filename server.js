@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser  = require('body-parser');
-var Evento = require('./app/models/event');
+var Evento = require('./app/models/evento');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
