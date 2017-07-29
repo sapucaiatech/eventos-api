@@ -1,0 +1,29 @@
+{
+  "name": "eventos-api",
+  "version": "1.0.0",
+  "description": "API de eventos do Sapucaia Tech e parceiros",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapucaiatech/eventos-api.git"
+  },
+  "keywords": [
+    "sapucaiatech", "eventos", "comunidade"
+  ],
+  "author": "Gabriel Prates <gabsprates@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sapucaiatech/eventos-api/issues"
+  },
+  "homepage": "https://github.com/sapucaiatech/eventos-api#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
