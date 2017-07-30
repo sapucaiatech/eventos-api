@@ -1,14 +1,14 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://sapucaia:sapucaia@ds129183.mlab.com:29183/sapucaia');
+const db = require('../db/mongo');
 
-var Schema = mongoose.Schema;
+const Schema = db.Schema;
 
-var EventoSchema = new Schema({
+const EventoSchema = new Schema({
   evento: String,
   link: String,
   local: String,
+  maps: String,
   data: { type: Date },
   descricao: String
 });
 
-module.exports = mongoose.model('Evento', EventoSchema);
+module.exports = db.model('Evento', EventoSchema);

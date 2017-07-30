@@ -1,73 +1,36 @@
-var express = require('express');
-var app = express();
-var bodyParser  = require('body-parser');
-var Evento = require('./app/models/evento');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
+const port = process.env.PORT || 8000;
 
+// Config
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8000;
-var router  = express.Router();
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
-router.use(function(req, res, next) {
-    next();
+  let date = new Date();
+  console.log(`\n -- ${req.method} ::> ${req.originalUrl}`);
+  console.log(`request at: ${date.toString()}`);
+  next();
 });
 
-router.get('/', function(req, res) {
-    res.json({ message: 'OK' });
+
+// Routes
+app.use('/', require('./app/routes'));
+
+
+// Error handling
+app.use(function (err, req, res, next) {
+  console.log(err.stack);
+  res.status(err.status || 500).json({ err: err.message });
 });
 
-router.route('/eventos')
-    .post(function(req, res) {
-        var evento = new Evento(req.body);
-        evento.save(function(error) {
-            if(error)
-                res.send(error);
-            res.json(
-              {
-                message: 'Event created',
-                event: evento
-              }
-            );
-        });
-    })
-    .get(function(req, res) {
-        Evento.find(function(err, eventos) {
-            if(err)
-                res.send(err);
-            res.json(eventos);
-        });
-    });
 
-    router.route('/eventos/:id')
-        .get(function(req, res) {
-            Evento.findById(req.params.id, function(error, evento) {
-                if(error)
-                    res.send(error);
-                res.json(evento);
-            });
-        })
-        .put(function(req, res) {
-            Evento.findOneAndUpdate({_id: req.params.id}, req.body,  {new: true},function(error, evento){
-                if(error)
-                    res.send(error);
-                res.send(
-                  {
-                    message:"Event updated",
-                    event: evento
-                  }
-                );
-            });
-        })
-        .delete(function(req, res) {
-            Evento.remove({_id: req.params.id}, function(error) {
-                if(error)
-                    res.send(error);
-                res.json({ message: 'Event removed'});
-       });
-   });
-
-app.use('/api', router);
+// Server
 app.listen(port);
 console.log('Server started on port ' + port);

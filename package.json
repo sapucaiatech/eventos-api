@@ -2,18 +2,33 @@
   "name": "eventos-api",
   "version": "1.0.0",
   "description": "API de eventos do Sapucaia Tech e parceiros",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sapucaiatech/eventos-api.git"
   },
   "keywords": [
-    "sapucaiatech", "eventos", "comunidade"
+    "sapucaiatech",
+    "eventos",
+    "comunidade"
   ],
   "author": "Gabriel Prates <gabsprates@gmail.com>",
+  "contributors": [
+    {
+      "name": "Gabriel Prates",
+      "email": "gabsprates@gmail.com",
+      "url": "http://gabrielprates.com"
+    },
+    {
+      "name": "Eduardo Rodrigues",
+      "email": "mrodrigues.eduardo@gmail.com",
+      "url": ""
+    }
+  ]
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sapucaiatech/eventos-api/issues"
@@ -21,9 +36,9 @@
   "homepage": "https://github.com/sapucaiatech/eventos-api#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "config": "^1.26.1",
     "express": "^4.15.3",
-    "mongoose": "*",
-    "request": "^2.74.0"
+    "mongoose": "^4.11.4"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
