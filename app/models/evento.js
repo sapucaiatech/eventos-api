@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('conection');
+mongoose.connect('mongodb://sapucaia:sapucaia@ds129183.mlab.com:29183/sapucaia');
 
 var Schema = mongoose.Schema;
 
