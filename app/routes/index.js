@@ -9,6 +9,10 @@ router.get('/', function (req, res) {
 });
 
 
+// Login
+router.use('/login', require('./login'));
+
+
 // Eventos
 router.use('/eventos', require('./eventos'));
 
