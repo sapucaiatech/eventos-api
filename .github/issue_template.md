@@ -1,0 +1,6 @@
+- Evento: [Nome do Evento]
+- Link: [URL/Site do Evento]
+- Local: [Nome do local && (Endereço || URL do Google Maps)]
+- Data: YYYY-MM-DD
+- Horário: HH:MM
+- Descrição: Rápida descrição
