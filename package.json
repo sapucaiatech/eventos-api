@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "API de eventos do Sapucaia Tech e parceiros",
   "main": "server.js",
+  "engines": {
+    "node": "~6.11"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
