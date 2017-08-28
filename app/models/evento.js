@@ -7,7 +7,10 @@ const EventoSchema = new Schema({
   link: String,
   local: String,
   maps: String,
-  data: { type: Date },
+  data: {
+    inicio: { type: Date },
+    fim: { type: Date }
+  },
   descricao: String
 });
 
