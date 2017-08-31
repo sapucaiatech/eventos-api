@@ -2,6 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const Evento  = require('../models/evento');
 const middlewareAuth = require('../utils/middlewareAuth');
+const moment = require('moment')
 
 router.route('/')
   .post(middlewareAuth, function(req, res) {
@@ -19,7 +20,7 @@ router.route('/')
     });
   })
   .get(function(req, res) {
-    Evento.find(function(err, eventos) {
+    Evento.find({'data.inicio' : { $gte : moment().startOf('day').format()} }, function(err, eventos) {
       if (err) {
         res.send(err);
       }
