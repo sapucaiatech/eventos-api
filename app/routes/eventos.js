@@ -22,9 +22,22 @@ router.post('/', middlewareAuth, function(req, res) {
 router.get('/', function(req, res) {
   let filtro = {};
 
-  filtro['data.inicio'] = {
-    $gte: moment().startOf('day').format()
-  };
+  if (Object.keys(req.query).length === 0) {
+
+    filtro['data.inicio'] = {
+      $gte: moment().startOf('day').format()
+    };
+
+  } else if (req.query.passados) {
+
+    filtro['data.inicio'] = {
+      $lte: moment().startOf('day').format()
+    }
+
+  } else {
+    // req.query.after
+    // req.query.before
+  }
 
   Evento
     .find(filtro, function(err, eventos) {
