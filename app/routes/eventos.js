@@ -21,22 +21,37 @@ router.post('/', middlewareAuth, function(req, res) {
 
 router.get('/', function(req, res) {
   let filtro = {};
+  const formatos = [
+    "YYYY-MM-DD",
+    "DD-MM-YYYY"
+  ];
 
-  if (Object.keys(req.query).length === 0) {
-
-    filtro['data.inicio'] = {
-      $gte: moment().startOf('day').format()
-    };
-
-  } else if (req.query.passados) {
+  if (req.query.passados) {
 
     filtro['data.inicio'] = {
       $lte: moment().startOf('day').format()
     }
 
   } else {
-    // req.query.after
-    // req.query.before
+
+    let intervalo = {};
+
+    if (req.query.after && moment(req.query.after, formatos).isValid()) {
+      intervalo.$gte = moment(req.query.after, formatos).startOf('day').format();
+    }
+
+    if (req.query.before && moment(req.query.before, formatos).isValid()) {
+      intervalo.$lte = moment(req.query.before, formatos).endOf('day').format();
+    }
+
+    filtro['data.inicio'] = intervalo;
+
+  }
+
+  if (Object.keys(filtro).length === 0) {
+    filtro['data.inicio'] = {
+      $gte: moment().startOf('day').format()
+    };
   }
 
   Evento
