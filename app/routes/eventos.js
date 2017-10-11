@@ -3,13 +3,14 @@ const router  = express.Router();
 const Evento  = require('../models/evento');
 const middlewareAuth = require('../utils/middlewareAuth');
 const moment = require('moment');
+const lancaError = require('../utils/lancaError.js')
 
 router.post('/', middlewareAuth, function(req, res) {
   let evento = new Evento(req.body);
   evento.save(function(err) {
 
     if (err) {
-      res.send(err);
+      throw lancaError("Problem creating the event: " + err, 500);
     }
     res.json({
       message: 'Event created',
@@ -29,7 +30,7 @@ router.get('/', function(req, res) {
   Evento
     .find(filtro, function(err, eventos) {
       if (err) {
-        res.send(err);
+        throw lancaError("Problem finding events: " + err, 500);
       }
       res.json(eventos);
     })
@@ -40,7 +41,7 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
   Evento.findById(req.params.id, function(err, evento) {
     if (err) {
-      res.send(err);
+      throw lancaError("Problem finding the event: " + err, 500);
     }
     res.json(evento);
   });
@@ -52,7 +53,7 @@ router.put('/:id', middlewareAuth, function(req, res) {
   }, req.body, { new: true }, function(err, evento) {
 
     if (err) {
-      res.send(err);
+      throw lancaError("Problem updating the event: " + err, 500);
     }
     res.send({
       message:"Event updated",
@@ -65,7 +66,7 @@ router.put('/:id', middlewareAuth, function(req, res) {
 router.delete('/:id', middlewareAuth, function(req, res) {
   Evento.remove({ _id: req.params.id }, function(err) {
     if (err) {
-      res.send(err);
+      throw lancaError("Problem deleting the event: " + err, 500);
     }
     res.json({ message: 'Event removed' });
   });
