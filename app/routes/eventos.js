@@ -21,13 +21,37 @@ router.post('/', middlewareAuth, function(req, res) {
 
 router.get('/', function(req, res) {
   let filtro = {};
+  let intervalo = {};
 
-  filtro['data.inicio'] = {
-    $gte: moment().startOf('day').format()
-  };
+  if (req.query.after && moment(req.query.after)) {
+    intervalo.$gte = moment(req.query.after).startOf('day').format();
+  }
+
+  if (req.query.before && moment(req.query.before)) {
+    intervalo.$lte = moment(req.query.before).endOf('day').format();
+  }
+
+  filtro['data.inicio'] = (Object.keys(intervalo).length === 0)
+    ? { $gte: moment().startOf('day').format() }
+    : intervalo
+  ;
 
   Evento
     .find(filtro, function(err, eventos) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(eventos);
+    })
+    .sort('data.inicio')
+  ;
+});
+
+router.get('/passados', function(req, res) {
+  Evento
+    .find({
+      'data.inicio': { $lte: moment().startOf('day').format() }
+    }, function(err, eventos) {
       if (err) {
         res.send(err);
       }
