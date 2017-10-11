@@ -21,19 +21,14 @@ router.post('/', middlewareAuth, function(req, res) {
 
 router.get('/', function(req, res) {
   let filtro = {};
-  const formatos = [
-    "YYYY-MM-DD",
-    "DD-MM-YYYY"
-  ];
-
   let intervalo = {};
 
-  if (req.query.after && moment(req.query.after, formatos).isValid()) {
-    intervalo.$gte = moment(req.query.after, formatos).startOf('day').format();
+  if (req.query.after && moment(req.query.after)) {
+    intervalo.$gte = moment(req.query.after).startOf('day').format();
   }
 
-  if (req.query.before && moment(req.query.before, formatos).isValid()) {
-    intervalo.$lte = moment(req.query.before, formatos).endOf('day').format();
+  if (req.query.before && moment(req.query.before)) {
+    intervalo.$lte = moment(req.query.before).endOf('day').format();
   }
 
   filtro['data.inicio'] = (Object.keys(intervalo).length === 0)
