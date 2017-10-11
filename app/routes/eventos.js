@@ -26,36 +26,37 @@ router.get('/', function(req, res) {
     "DD-MM-YYYY"
   ];
 
-  if (req.query.passados) {
+  let intervalo = {};
 
-    filtro['data.inicio'] = {
-      $lte: moment().startOf('day').format()
-    }
-
-  } else {
-
-    let intervalo = {};
-
-    if (req.query.after && moment(req.query.after, formatos).isValid()) {
-      intervalo.$gte = moment(req.query.after, formatos).startOf('day').format();
-    }
-
-    if (req.query.before && moment(req.query.before, formatos).isValid()) {
-      intervalo.$lte = moment(req.query.before, formatos).endOf('day').format();
-    }
-
-    filtro['data.inicio'] = intervalo;
-
+  if (req.query.after && moment(req.query.after, formatos).isValid()) {
+    intervalo.$gte = moment(req.query.after, formatos).startOf('day').format();
   }
 
-  if (Object.keys(filtro).length === 0) {
-    filtro['data.inicio'] = {
-      $gte: moment().startOf('day').format()
-    };
+  if (req.query.before && moment(req.query.before, formatos).isValid()) {
+    intervalo.$lte = moment(req.query.before, formatos).endOf('day').format();
   }
+
+  filtro['data.inicio'] = (Object.keys(intervalo).length === 0)
+    ? { $gte: moment().startOf('day').format() }
+    : intervalo
+  ;
 
   Evento
     .find(filtro, function(err, eventos) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(eventos);
+    })
+    .sort('data.inicio')
+  ;
+});
+
+router.get('/passados', function(req, res) {
+  Evento
+    .find({
+      'data.inicio': { $lte: moment().startOf('day').format() }
+    }, function(err, eventos) {
       if (err) {
         res.send(err);
       }
