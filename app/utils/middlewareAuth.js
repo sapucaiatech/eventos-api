@@ -9,7 +9,7 @@ const middlewareAuth = function(req, res, next) {
   try {
 
     if (!token) {
-      throw lancaError("Forbidden", 403);
+      throw lancaError("Unauthorized", 401);
     }
 
     let decoded = jwt.decode(token, process.env.JWT_SECRET);
