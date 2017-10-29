@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/usr/src/app
     working_dir: /usr/src/app
-    command: ["node", "server.js"]
+    command: ["./node_modules/nodemon/bin/nodemon.js", "server.js"]
     restart: always
     depends_on:
       - "mongodb"
