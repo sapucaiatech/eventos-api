@@ -27,8 +27,26 @@ Se você tem algum evento (seja participante ou mesmo criador) [crie uma nova is
 - Link: [URL/Site do Evento]
 - Local: [Nome do local && (Endereço || URL do Google Maps)]
 - Data: YYYY-MM-DD
-- Horário: 
+- Horário:
 - Descrição: Rápida descrição
+```
+
+---
+
+## Desenvolvimento
+
+Pré-requisitos:
+
+* [Git](https://git-scm.com/downloads)
+* [Docker](https://docs.docker.com/engine/installation/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
+Agora basta clonar o projeto e executar com o Docker Compose:
+
+```sh
+git clone https://github.com/sapucaiatech/eventos-api.git
+cd eventos-api
+docker-compose up
 ```
 
 ## Licença
