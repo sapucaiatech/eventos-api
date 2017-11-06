@@ -5,14 +5,14 @@ const app = express();
 const logger = require('morgan');
 
 const port = process.env.PORT || 8000;
-const dev = process.env.DEV || true;
+const log = process.env.APP_LOG || "dev";
 
 // Config
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (dev){
-  app.use(logger('combined'));
+if (log === 'dev'){
+  app.use(logger('dev'));
 }
 
 app.use(function (req, res, next) {
